@@ -1,4 +1,4 @@
-package org.gephi.toolkit.benchmark;
+package org.gephi.toolkit.benchmark.layout;
 
 import java.security.CodeSource;
 import org.junit.Test;

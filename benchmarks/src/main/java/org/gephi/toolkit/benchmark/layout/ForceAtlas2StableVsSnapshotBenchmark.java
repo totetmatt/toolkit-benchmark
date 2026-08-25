@@ -1,7 +1,8 @@
-package org.gephi.toolkit.benchmark;
+package org.gephi.toolkit.benchmark.layout;
 
 import java.util.concurrent.TimeUnit;
 import org.gephi.graph.api.GraphModel;
+import org.gephi.toolkit.benchmark.RandomGraphs;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;

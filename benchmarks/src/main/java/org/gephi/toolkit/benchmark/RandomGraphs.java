@@ -9,12 +9,12 @@ import org.gephi.io.processor.plugin.DefaultProcessor;
 import org.gephi.project.api.Workspace;
 import org.openide.util.Lookup;
 
-final class RandomGraphs {
+public final class RandomGraphs {
 
     private RandomGraphs() {
     }
 
-    static GraphModel newRandomGraphModel(int nodeCount) {
+    public static GraphModel newRandomGraphModel(int nodeCount) {
         Container container = Lookup.getDefault().lookup(Container.Factory.class).newContainer();
         RandomGraph randomGraph = new RandomGraph();
         randomGraph.setNumberOfNodes(nodeCount);
