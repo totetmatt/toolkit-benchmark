@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>layout-plugin-local</artifactId>
-    <version>${layout-plugin.local.version}</version>
+    <version>0.11.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Layout Plugin (relocated)</name>
@@ -57,6 +57,13 @@
                                     <shadedPattern>local.org.gephi.layout.plugin</shadedPattern>
                                 </relocation>
                             </relocations>
+                            <transformers>
+                                <!-- Without this, META-INF/services/org.gephi.layout.spi.LayoutBuilder
+                                     keeps the pre-relocation class names, breaking ServiceLoader/Lookup
+                                     discovery of the relocated classes. -->
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                         </configuration>
                     </execution>

@@ -9,12 +9,6 @@
     <packaging>pom</packaging>
 
     <name>Gephi Toolkit Benchmark</name>
-    <description>
-        JMH benchmarks built on top of the released gephi-toolkit, while also exercising a local
-        layout-plugin build. Since gephi-toolkit already bundles its own layout-plugin version, the
-        local build is shaded/relocated in the layout-plugin-relocated module to avoid a duplicate
-        org.gephi.layout.plugin.forceAtlas.ForceAtlas class clash on the classpath.
-    </description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

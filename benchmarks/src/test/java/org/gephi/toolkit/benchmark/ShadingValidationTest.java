@@ -16,13 +16,13 @@ public class ShadingValidationTest {
 
     @Test
     public void bothForceAtlasBuildsCoexistOnTheClasspath() {
-        // From gephi-toolkit 0.11.2 (layout-plugin bundled inside the toolkit jar)
+        // From gephi-toolkit stable
         org.gephi.layout.plugin.forceAtlas.ForceAtlas toolkitVersion =
                 new org.gephi.layout.plugin.forceAtlas.ForceAtlas();
 
-        // From the local layout-plugin 0.11.3-SNAPSHOT build, relocated by maven-shade-plugin
-        shaded.layoutplugin0113.org.gephi.layout.plugin.forceAtlas.ForceAtlas localVersion =
-                new shaded.layoutplugin0113.org.gephi.layout.plugin.forceAtlas.ForceAtlas();
+        // From the local layout-plugin
+       local.org.gephi.layout.plugin.forceAtlas.ForceAtlas localVersion =
+                new local.org.gephi.layout.plugin.forceAtlas.ForceAtlas();
 
         assertNotEquals(toolkitVersion.getClass().getName(), localVersion.getClass().getName());
 
