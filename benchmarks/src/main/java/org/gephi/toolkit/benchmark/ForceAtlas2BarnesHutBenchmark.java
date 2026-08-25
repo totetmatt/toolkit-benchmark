@@ -1,17 +1,9 @@
 package org.gephi.toolkit.benchmark;
 
 import java.util.concurrent.TimeUnit;
-import org.gephi.graph.api.GraphController;
 import org.gephi.graph.api.GraphModel;
-import org.gephi.io.generator.plugin.RandomGraph;
-import org.gephi.io.importer.api.Container;
-import org.gephi.io.importer.api.ImportController;
-import org.gephi.io.processor.plugin.DefaultProcessor;
 import org.gephi.layout.plugin.forceAtlas2.ForceAtlas2;
 import org.gephi.layout.plugin.forceAtlas2.ForceAtlas2Builder;
-import org.gephi.project.api.ProjectController;
-import org.gephi.project.api.Workspace;
-import org.openide.util.Lookup;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -37,7 +29,7 @@ public class ForceAtlas2BarnesHutBenchmark {
     @State(Scope.Thread)
     public static class LayoutState {
 
-        @Param({"200", "2000"})
+        @Param({"2000"})
         int nodeCount;
 
         @Param({"true", "false"})
@@ -47,7 +39,7 @@ public class ForceAtlas2BarnesHutBenchmark {
 
         @Setup(Level.Trial)
         public void setup() {
-            GraphModel graphModel = randomGraphModel(nodeCount);
+            GraphModel graphModel = RandomGraphs.newRandomGraphModel(nodeCount);
 
             layout = new ForceAtlas2Builder().buildLayout();
             layout.setGraphModel(graphModel);
@@ -58,23 +50,6 @@ public class ForceAtlas2BarnesHutBenchmark {
         @TearDown(Level.Trial)
         public void tearDown() {
             layout.endAlgo();
-        }
-
-        private static GraphModel randomGraphModel(int nodeCount) {
-            ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
-            pc.newProject();
-            Workspace workspace = pc.getCurrentWorkspace();
-
-            Container container = Lookup.getDefault().lookup(Container.Factory.class).newContainer();
-            RandomGraph randomGraph = new RandomGraph();
-            randomGraph.setNumberOfNodes(nodeCount);
-            randomGraph.setWiringProbability(0.01);
-            randomGraph.generate(container.getLoader());
-
-            Lookup.getDefault().lookup(ImportController.class)
-                    .process(container, new DefaultProcessor(), workspace);
-
-            return Lookup.getDefault().lookup(GraphController.class).getGraphModel();
         }
     }
 
