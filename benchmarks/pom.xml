@@ -62,12 +62,8 @@
                 <configuration>
                     <mainClass>org.openjdk.jmh.Main</mainClass>
                     <classpathScope>test</classpathScope>
-                    <!-- gephi-toolkit (NetBeans platform) starts long-lived daemon threads
-                         (RequestProcessor, a reference-queue daemon) that are never meant to be
-                         interrupted mid-life. Without this, exec:java spends ~15s per run trying
-                         and failing to kill them before giving up with a harmless warning. Daemon
-                         threads die on their own once the JVM has no other work, so there's
-                         nothing to clean up. -->
+                    <!-- gephi-toolkit's NetBeans daemon threads ignore interruption, costing
+                         exec:java ~15s per run for nothing; they die with the JVM regardless. -->
                     <cleanupDaemonThreads>false</cleanupDaemonThreads>
                 </configuration>
             </plugin>
