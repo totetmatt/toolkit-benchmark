@@ -13,12 +13,6 @@ import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.TearDown;
 
-/**
- * Default-settings ForceAtlas2 iteration cost on a fixed 200-node graph: gephi-toolkit's
- * bundled ForceAtlas2 (0.11.2) vs. the local layout-plugin build (0.11.3-SNAPSHOT, relocated
- * under local.*). Each variant gets its own graph instance; layout settings are left untouched
- * (no Barnes-Hut override) so both run with whatever ForceAtlas2 defaults to for this node count.
- */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 @Fork(0)
