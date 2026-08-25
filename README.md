@@ -10,6 +10,24 @@ around this with `maven-shade-plugin`: it repackages the local build's classes (
 `META-INF/services` SPI entries) under the `local.*` prefix. The `benchmarks` module then depends
 on both gephi-toolkit and this relocated jar side by side.
 
+## Configuring versions
+
+Both versions under test are properties in the root `pom.xml` — change them there, nowhere else:
+
+```xml
+<gephi-toolkit.version>0.11.2</gephi-toolkit.version>
+<layout-plugin.local.version>0.11.3-SNAPSHOT</layout-plugin.local.version>
+```
+
+- `gephi-toolkit.version` — the released gephi-toolkit to pull from Maven Central.
+- `layout-plugin.local.version` — the local `layout-plugin` build to compare against. This must
+  already be installed in your local `~/.m2` repo (built from your gephi checkout) — it's not
+  fetched from anywhere else. It also doubles as `layout-plugin-local`'s own module version, so
+  Maven prints a harmless `'version' contains an expression but should be a constant` warning;
+  that's expected and safe to ignore.
+
+After changing either property, rebuild with `mvn install` (see below) before running benchmarks.
+
 ## Build
 
 ```bash

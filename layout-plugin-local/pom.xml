@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>layout-plugin-local</artifactId>
-    <version>0.11.3-SNAPSHOT</version>
+    <version>${layout-plugin.local.version}</version>
     <packaging>jar</packaging>
 
     <name>Layout Plugin (relocated)</name>
