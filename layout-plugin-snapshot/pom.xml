@@ -64,6 +64,26 @@
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                             </transformers>
+                            <filters>
+                                <filter>
+                                    <!-- Nothing reads either jar's own Maven build descriptor;
+                                         dropping it avoids a harmless but noisy overlapping-resource
+                                         warning between this module's placeholder jar and the
+                                         layout-plugin jar being relocated. -->
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/maven/**</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <!-- Keep this module's own (placeholder) manifest as the only
+                                         candidate, so shade doesn't report a MANIFEST.MF overlap. -->
+                                    <artifact>org.gephi:layout-plugin</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/MANIFEST.MF</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                         </configuration>
                     </execution>
