@@ -16,7 +16,7 @@ import org.openjdk.jmh.annotations.TearDown;
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 @Fork(0)
-public class ForceAtlas2StableVsLocalBenchmark {
+public class ForceAtlas2StableVsSnapshotBenchmark {
 
     private static final int NODE_COUNT = 200;
 
@@ -40,14 +40,14 @@ public class ForceAtlas2StableVsLocalBenchmark {
     }
 
     @State(Scope.Thread)
-    public static class LocalState {
+    public static class SnapshotState {
 
-        private local.org.gephi.layout.plugin.forceAtlas2.ForceAtlas2 layout;
+        private snapshot.org.gephi.layout.plugin.forceAtlas2.ForceAtlas2 layout;
 
         @Setup(Level.Trial)
         public void setup() {
             GraphModel graphModel = RandomGraphs.newRandomGraphModel(NODE_COUNT);
-            layout = new local.org.gephi.layout.plugin.forceAtlas2.ForceAtlas2Builder().buildLayout();
+            layout = new snapshot.org.gephi.layout.plugin.forceAtlas2.ForceAtlas2Builder().buildLayout();
             layout.setGraphModel(graphModel);
             layout.initAlgo();
         }
@@ -64,7 +64,7 @@ public class ForceAtlas2StableVsLocalBenchmark {
     }
 
     @Benchmark
-    public void local(LocalState state) {
+    public void snapshot(SnapshotState state) {
         state.layout.goAlgo();
     }
 }

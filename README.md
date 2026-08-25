@@ -1,30 +1,25 @@
 # toolkit-benchmark
 
-JMH benchmarks comparing `gephi-toolkit:0.11.2` (Maven Central) against a local
-`layout-plugin:0.11.3-SNAPSHOT` build.
+JMH benchmarks comparing the stable `gephi-toolkit` (Maven Central) against a snapshot
+`layout-plugin` build.
 
 Both versions provide a class with the same name
 (`org.gephi.layout.plugin.forceAtlas.ForceAtlas`, `...forceAtlas2.ForceAtlas2`, etc.), so they
-can't be regular dependencies of the same module at once. The `layout-plugin-local` module works
-around this with `maven-shade-plugin`: it repackages the local build's classes (and its
-`META-INF/services` SPI entries) under the `local.*` prefix. The `benchmarks` module then depends
-on both gephi-toolkit and this relocated jar side by side.
+can't be regular dependencies of the same module at once. The `layout-plugin-snapshot` module
+works around this with `maven-shade-plugin`: it repackages the snapshot build's classes (and its
+`META-INF/services` SPI entries) under the `snapshot.*` prefix. The `benchmarks` module then
+depends on both gephi-toolkit and this relocated jar side by side.
 
 ## Configuring versions
 
 Both versions under test are properties in the root `pom.xml` — change them there, nowhere else:
 
-```xml
-<gephi-toolkit.version>0.11.2</gephi-toolkit.version>
-<layout-plugin.local.version>0.11.3-SNAPSHOT</layout-plugin.local.version>
-```
-
-- `gephi-toolkit.version` — the released gephi-toolkit to pull from Maven Central.
-- `layout-plugin.local.version` — the local `layout-plugin` build to compare against. This must
-  already be installed in your local `~/.m2` repo (built from your gephi checkout) — it's not
-  fetched from anywhere else. It also doubles as `layout-plugin-local`'s own module version, so
-  Maven prints a harmless `'version' contains an expression but should be a constant` warning;
-  that's expected and safe to ignore.
+- `gephi-toolkit.version` — the stable gephi-toolkit to pull from Maven Central.
+- `layout-plugin.snapshot.version` — the snapshot `layout-plugin` build to compare against. This
+  must already be installed in your local `~/.m2` repo (built from your gephi checkout) — it's
+  not fetched from anywhere else. It also doubles as `layout-plugin-snapshot`'s own module
+  version, so Maven prints a harmless `'version' contains an expression but should be a constant`
+  warning; that's expected and safe to ignore.
 
 After changing either property, rebuild with `mvn install` (see below) before running benchmarks.
 
@@ -34,7 +29,7 @@ After changing either property, rebuild with `mvn install` (see below) before ru
 mvn install
 ```
 
-Re-run this whenever `layout-plugin-local` changes — `benchmarks` resolves it from your local
+Re-run this whenever `layout-plugin-snapshot` changes — `benchmarks` resolves it from your local
 `~/.m2` repo, not from an in-memory reactor.
 
 ## Run benchmarks
@@ -48,13 +43,13 @@ mvn -pl benchmarks exec:java
 One class, or a name filter (JMH treats the argument as a regex):
 
 ```bash
-mvn -pl benchmarks exec:java -Dexec.args="ForceAtlas2StableVsLocalBenchmark"
+mvn -pl benchmarks exec:java -Dexec.args="ForceAtlas2StableVsSnapshotBenchmark"
 ```
 
 Quick smoke test (short warmup/measurement, useful while iterating):
 
 ```bash
-mvn -pl benchmarks exec:java -Dexec.args="ForceAtlas2StableVsLocalBenchmark -wi 1 -i 2 -w 500ms -r 500ms"
+mvn -pl benchmarks exec:java -Dexec.args="ForceAtlas2StableVsSnapshotBenchmark -wi 1 -i 2 -w 500ms -r 500ms"
 ```
 
 List available benchmarks without running them:
@@ -72,8 +67,8 @@ MAVEN_OPTS="--add-opens java.base/java.net=ALL-UNNAMED" mvn -pl benchmarks exec:
 
 ## Benchmarks
 
-- `ForceAtlas2StableVsLocalBenchmark` — cost of one `ForceAtlas2.goAlgo()` iteration on a fixed
-  200-node random graph, default settings, stable vs. local.
+- `ForceAtlas2StableVsSnapshotBenchmark` — cost of one `ForceAtlas2.goAlgo()` iteration on a fixed
+  200-node random graph, default settings, stable vs. snapshot.
 
 ## Notes
 
@@ -84,4 +79,4 @@ MAVEN_OPTS="--add-opens java.base/java.net=ALL-UNNAMED" mvn -pl benchmarks exec:
 - There's no uber jar. Given gephi-toolkit's huge dependency tree (NetBeans platform, Batik, POI,
   PDFBox, several JDBC drivers, ...), shading it all into one runnable jar added build time and
   noise for no benefit — the actual class-collision problem is already solved by
-  `layout-plugin-local`.
+  `layout-plugin-snapshot`.

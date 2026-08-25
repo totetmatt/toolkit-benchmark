@@ -13,21 +13,21 @@
     <packaging>jar</packaging>
 
     <name>Gephi Toolkit Benchmarks</name>
-    <description>JMH benchmarks exercising gephi-toolkit and a local layout-plugin build.</description>
+    <description>JMH benchmarks exercising gephi-toolkit and a snapshot layout-plugin build.</description>
 
     <dependencies>
-        <!-- Released Gephi Toolkit -->
+        <!-- Stable Gephi Toolkit -->
         <dependency>
             <groupId>org.gephi</groupId>
             <artifactId>gephi-toolkit</artifactId>
             <version>${gephi-toolkit.version}</version>
         </dependency>
 
-        <!-- Local layout-plugin -->
+        <!-- Snapshot layout-plugin -->
         <dependency>
             <groupId>org.gephi.benchmark</groupId>
-            <artifactId>layout-plugin-local</artifactId>
-            <version>${layout-plugin.local.version}</version>
+            <artifactId>layout-plugin-snapshot</artifactId>
+            <version>${layout-plugin.snapshot.version}</version>
         </dependency>
 
         <!-- JMH -->

@@ -9,16 +9,16 @@
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>layout-plugin-local</artifactId>
-    <version>${layout-plugin.local.version}</version>
+    <artifactId>layout-plugin-snapshot</artifactId>
+    <version>${layout-plugin.snapshot.version}</version>
     <packaging>jar</packaging>
 
-    <name>Layout Plugin (relocated)</name>
+    <name>Layout Plugin (snapshot, relocated)</name>
     <description>
-        Takes the locally built org.gephi:layout-plugin:${layout-plugin.local.version} jar and
-        repackages its classes (and resource bundles) under the "local" prefix,
-        via maven-shade-plugin relocation. This lets the benchmarks module depend on this local
-        build side-by-side with gephi-toolkit's own bundled layout-plugin.
+        Takes the locally built org.gephi:layout-plugin:${layout-plugin.snapshot.version} jar and
+        repackages its classes (and resource bundles) under the "snapshot" prefix,
+        via maven-shade-plugin relocation. This lets the benchmarks module depend on this snapshot
+        build side-by-side with gephi-toolkit's own bundled (stable) layout-plugin.
 
         Only org.gephi:layout-plugin's own classes are bundled/relocated here (see artifactSet);
         its dependencies (layout-api, graph-api, project-api, NetBeans openide APIs, ...) are left
@@ -29,7 +29,7 @@
         <dependency>
             <groupId>org.gephi</groupId>
             <artifactId>layout-plugin</artifactId>
-            <version>${layout-plugin.local.version}</version>
+            <version>${layout-plugin.snapshot.version}</version>
         </dependency>
     </dependencies>
 
@@ -54,7 +54,7 @@
                             <relocations>
                                 <relocation>
                                     <pattern>org.gephi.layout.plugin</pattern>
-                                    <shadedPattern>local.org.gephi.layout.plugin</shadedPattern>
+                                    <shadedPattern>snapshot.org.gephi.layout.plugin</shadedPattern>
                                 </relocation>
                             </relocations>
                             <transformers>
