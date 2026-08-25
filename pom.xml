@@ -32,7 +32,7 @@
     </properties>
 
     <modules>
-        <module>layout-plugin-relocated</module>
+        <module>layout-plugin-local</module>
         <module>benchmarks</module>
     </modules>
 </project>

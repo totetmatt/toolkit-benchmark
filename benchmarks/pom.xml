@@ -21,20 +21,17 @@
     </properties>
 
     <dependencies>
-        <!-- Released Gephi Toolkit; brings in layout-plugin 0.11.2
-             (org.gephi.layout.plugin.forceAtlas.ForceAtlas) -->
+        <!-- Released Gephi Toolkit -->
         <dependency>
             <groupId>org.gephi</groupId>
             <artifactId>gephi-toolkit</artifactId>
             <version>${gephi-toolkit.version}</version>
         </dependency>
 
-        <!-- Local layout-plugin 0.11.3-SNAPSHOT build, relocated to
-             shaded.layoutplugin0113.org.gephi.layout.plugin.* so it
-             doesn't clash with the one bundled in gephi-toolkit -->
+        <!-- Local layout-plugin -->
         <dependency>
             <groupId>org.gephi.benchmark</groupId>
-            <artifactId>layout-plugin-relocated</artifactId>
+            <artifactId>layout-plugin-local</artifactId>
             <version>${layout-plugin.local.version}</version>
         </dependency>
 
@@ -65,7 +62,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.6.2</version>
                 <executions>
                     <execution>
                         <phase>package</phase>

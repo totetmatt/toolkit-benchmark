@@ -9,17 +9,16 @@
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>layout-plugin-relocated</artifactId>
+    <artifactId>layout-plugin-local</artifactId>
     <version>${layout-plugin.local.version}</version>
     <packaging>jar</packaging>
 
     <name>Layout Plugin (relocated)</name>
     <description>
         Takes the locally built org.gephi:layout-plugin:${layout-plugin.local.version} jar and
-        repackages its classes (and resource bundles) under the "shaded.layoutplugin0113" prefix,
+        repackages its classes (and resource bundles) under the "local" prefix,
         via maven-shade-plugin relocation. This lets the benchmarks module depend on this local
-        build side-by-side with gephi-toolkit's own bundled layout-plugin without both providing
-        the same org.gephi.layout.plugin.forceAtlas.ForceAtlas class name.
+        build side-by-side with gephi-toolkit's own bundled layout-plugin.
 
         Only org.gephi:layout-plugin's own classes are bundled/relocated here (see artifactSet);
         its dependencies (layout-api, graph-api, project-api, NetBeans openide APIs, ...) are left
@@ -39,7 +38,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.6.2</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -55,7 +54,7 @@
                             <relocations>
                                 <relocation>
                                     <pattern>org.gephi.layout.plugin</pattern>
-                                    <shadedPattern>shaded.layoutplugin0113.org.gephi.layout.plugin</shadedPattern>
+                                    <shadedPattern>local.org.gephi.layout.plugin</shadedPattern>
                                 </relocation>
                             </relocations>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
