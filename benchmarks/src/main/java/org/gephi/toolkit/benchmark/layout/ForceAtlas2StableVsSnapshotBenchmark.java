@@ -14,8 +14,8 @@ import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.TearDown;
 
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.MICROSECONDS)
+@BenchmarkMode(Mode.SampleTime)
+@OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Fork(0)
 public class ForceAtlas2StableVsSnapshotBenchmark {
 
