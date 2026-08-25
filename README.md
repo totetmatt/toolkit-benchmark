@@ -72,8 +72,6 @@ MAVEN_OPTS="--add-opens java.base/java.net=ALL-UNNAMED" mvn -pl benchmarks exec:
 
 ## Benchmarks
 
-- `ForceAtlasBuilderBenchmark` — cost of building a `ForceAtlas` layout via each version's
-  `LayoutBuilder`.
 - `ForceAtlas2StableVsLocalBenchmark` — cost of one `ForceAtlas2.goAlgo()` iteration on a fixed
   200-node random graph, default settings, stable vs. local.
 
