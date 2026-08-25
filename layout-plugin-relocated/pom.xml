@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.gephi.benchmark</groupId>
+        <artifactId>toolkit-benchmark</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>layout-plugin-relocated</artifactId>
+    <version>${layout-plugin.local.version}</version>
+    <packaging>jar</packaging>
+
+    <name>Layout Plugin (relocated)</name>
+    <description>
+        Takes the locally built org.gephi:layout-plugin:${layout-plugin.local.version} jar and
+        repackages its classes (and resource bundles) under the "shaded.layoutplugin0113" prefix,
+        via maven-shade-plugin relocation. This lets the benchmarks module depend on this local
+        build side-by-side with gephi-toolkit's own bundled layout-plugin without both providing
+        the same org.gephi.layout.plugin.forceAtlas.ForceAtlas class name.
+
+        Only org.gephi:layout-plugin's own classes are bundled/relocated here (see artifactSet);
+        its dependencies (layout-api, graph-api, project-api, NetBeans openide APIs, ...) are left
+        untouched and are expected to be satisfied at runtime by gephi-toolkit itself.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.gephi</groupId>
+            <artifactId>layout-plugin</artifactId>
+            <version>${layout-plugin.local.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>org.gephi:layout-plugin</include>
+                                </includes>
+                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>org.gephi.layout.plugin</pattern>
+                                    <shadedPattern>shaded.layoutplugin0113.org.gephi.layout.plugin</shadedPattern>
+                                </relocation>
+                            </relocations>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
