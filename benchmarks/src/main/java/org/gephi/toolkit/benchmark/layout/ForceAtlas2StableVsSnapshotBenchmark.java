@@ -1,16 +1,18 @@
 package org.gephi.toolkit.benchmark.layout;
 
+
 import java.util.concurrent.TimeUnit;
 import org.gephi.graph.api.GraphModel;
 import org.gephi.layout.plugin.forceAtlas2.ForceAtlas2Builder;
 import org.gephi.layout.spi.Layout;
-import org.gephi.toolkit.benchmark.RandomGraphs;
+import org.gephi.toolkit.benchmark.GexfGraph;
+
 import org.openjdk.jmh.annotations.*;
-import snapshot.org.gephi.layout.plugin.forceAtlas2.ForceAtlas2;
+
 
 @BenchmarkMode(Mode.SampleTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
-@Fork(0)
+@Fork(1)
 public class ForceAtlas2StableVsSnapshotBenchmark {
 
 
@@ -19,8 +21,6 @@ public class ForceAtlas2StableVsSnapshotBenchmark {
 
 
 
-        @Param({"100", "1000", "5000"})
-        public int nodeCount;
 
         @Param({"snapshot","stable"})
         public String layout;
@@ -29,7 +29,8 @@ public class ForceAtlas2StableVsSnapshotBenchmark {
 
         @Setup(Level.Trial)
         public void setup() {
-            GraphModel graphModel = RandomGraphs.newRandomGraphModel(nodeCount);
+
+            GraphModel graphModel = GexfGraph.loadGexf(GexfGraph.getFile("comic-hero-network.gexf"));
 
             if(layout.equals("stable"))
             {
